@@ -13,8 +13,23 @@
 
 - (Pizza *)makePizzaWithSize:(Sizes)size toppings:(NSArray *)toppings
 {
-    Pizza *pizza = [[Pizza alloc] initWithSize:size andToppings:toppings];
-    return pizza;
+    if([_delegate kitchen:self ShouldMakePizzaOfSize:size andToppings:toppings])
+    {
+        if([_delegate kitchenShouldUpgradeOrder:self])
+        {
+            Pizza *pizza = [[Pizza alloc] initWithSize:large andToppings:toppings];
+            [_delegate kitchenDidMakePizza:pizza];
+            return pizza;
+        } else
+        {
+            Pizza *pizza = [[Pizza alloc] initWithSize:size andToppings:toppings];
+            [_delegate kitchenDidMakePizza:pizza];
+            return pizza;
+        }
+    } else
+    {
+        return nil;
+    }
 }
 -(Pizza*)makeCustomOrder:(NSString*) string
 {

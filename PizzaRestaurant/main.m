@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 #import "Kitchen.h"
+#import "Manager.h"
+#import "CheeryManager.h"
 
 int main(int argc, const char * argv[])
 {
@@ -18,6 +20,9 @@ int main(int argc, const char * argv[])
         NSLog(@"Please pick your pizza size and toppings:");
         
         Kitchen *restaurantKitchen = [Kitchen new];
+        Manager *grumpyManager = [Manager new];
+        CheeryManager *cheeryManager = [CheeryManager new];
+        restaurantKitchen.delegate = grumpyManager;
         
         while (TRUE) {
             // Loop forever
@@ -33,9 +38,20 @@ int main(int argc, const char * argv[])
             
             // Take the first word of the command as the size, and the rest as the toppings
             NSMutableArray *commandWords = [NSMutableArray arrayWithArray:[inputString componentsSeparatedByString:@" "]];
-            if(commandWords.count == 1)
+            if([inputString containsString:@"switch"])
             {
-                
+                if(restaurantKitchen.delegate == grumpyManager)
+                {
+                    restaurantKitchen.delegate = cheeryManager;
+                    NSLog(@"New manager is cheery!");
+                } else
+                {
+                    restaurantKitchen.delegate = grumpyManager;
+                    NSLog(@"New manager is grumpy!");
+                }
+            } else if(commandWords.count == 1)
+            {
+                [restaurantKitchen makeCustomOrder:commandWords[0]];
             } else
             {
                 NSString *sizeString = [commandWords[0] lowercaseString];
