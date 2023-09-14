@@ -11,6 +11,7 @@
 #import "Kitchen.h"
 #import "Manager.h"
 #import "CheeryManager.h"
+#import "DeliveryService.h"
 
 int main(int argc, const char * argv[])
 {
@@ -23,6 +24,9 @@ int main(int argc, const char * argv[])
         Manager *grumpyManager = [Manager new];
         CheeryManager *cheeryManager = [CheeryManager new];
         restaurantKitchen.delegate = grumpyManager;
+        DeliveryService *deliveryService = [DeliveryService new];
+        grumpyManager.deliveryDervice = deliveryService;
+        cheeryManager.deliveryService = deliveryService;
         
         while (TRUE) {
             // Loop forever
@@ -38,7 +42,15 @@ int main(int argc, const char * argv[])
             
             // Take the first word of the command as the size, and the rest as the toppings
             NSMutableArray *commandWords = [NSMutableArray arrayWithArray:[inputString componentsSeparatedByString:@" "]];
-            if([inputString containsString:@"switch"])
+            if([inputString containsString:@"log"])
+            {
+                NSLog(@"Pizza log total:");
+                NSArray<NSString*>* array = [deliveryService getPizzaLog];
+                for(NSString* string in array)
+                {
+                    NSLog(@"%@",string);
+                }
+            } else if([inputString containsString:@"switch"])
             {
                 if(restaurantKitchen.delegate == grumpyManager)
                 {

@@ -7,6 +7,7 @@
 //
 
 #import "CheeryManager.h"
+#import "DeliveryService.h"
 
 @implementation CheeryManager
 -(BOOL)kitchen:(Kitchen*)kitchen ShouldMakePizzaOfSize:(Sizes)size andToppings:(NSArray*)toppings
@@ -19,6 +20,7 @@
 }
 -(void)kitchenDidMakePizza:(Pizza *)pizza
 {
+    [_deliveryService deliverPizza:pizza];
     NSLog(@"Have a nice-a day!");
 }
 @end

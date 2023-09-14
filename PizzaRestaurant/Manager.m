@@ -7,6 +7,7 @@
 //
 
 #import "Manager.h"
+#import "DeliveryService.h"
 
 @implementation Manager
 
@@ -23,6 +24,11 @@
 -(BOOL)kitchenShouldUpgradeOrder:(Kitchen *)kitchen
 {
     return NO;
+}
+-(void)kitchenDidMakePizza:(Pizza *)pizza
+{
+    [_deliveryDervice deliverPizza:pizza];
+    NSLog(@"DON'T have a nice-a day!");
 }
 
 @end
