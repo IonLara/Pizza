@@ -32,7 +32,28 @@ int main(int argc, const char * argv[])
             NSLog(@"Input was %@", inputString);
             
             // Take the first word of the command as the size, and the rest as the toppings
-            NSArray *commandWords = [inputString componentsSeparatedByString:@" "];
+            NSMutableArray *commandWords = [NSMutableArray arrayWithArray:[inputString componentsSeparatedByString:@" "]];
+            if(commandWords.count == 1)
+            {
+                
+            } else
+            {
+                NSString *sizeString = [commandWords[0] lowercaseString];
+                [commandWords removeObjectAtIndex:0];
+                if([sizeString isEqual:@"large"])
+                {
+                    [restaurantKitchen makePizzaWithSize:large toppings:commandWords];
+                } else if([sizeString isEqual:@"medium"])
+                {
+                    [restaurantKitchen makePizzaWithSize:medium toppings:commandWords];
+                } else
+                {
+                    [restaurantKitchen makePizzaWithSize:small toppings:commandWords];
+                }
+            }
+            
+            
+            
             
             // And then send some message to the kitchen...
         }
